@@ -6,6 +6,7 @@
 <title>Thisara N. Herath — Solution Engineer, Industrial IoT & Edge AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
   :root{
     --bg:#0e1316;
@@ -330,7 +331,7 @@
 
   /* Reference-inspired portfolio structure */
   .hero-left{position:relative}.hero-left::before{content:'';position:absolute;width:300px;height:180px;left:-90px;top:80px;border-radius:50%;background:rgba(184,255,101,.08);filter:blur(80px);pointer-events:none}.hero h1.bigname{position:relative;font-size:clamp(56px,8.4vw,118px);line-height:.88;margin:16px 0 42px;text-wrap:balance}.hero h1.bigname .accent{position:relative}.hero h1.bigname .accent::after{content:'';position:absolute;left:4%;right:0;bottom:-8px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--signal),#7c5cff,transparent);opacity:.7}.hero-intro{display:inline-flex;align-items:center;padding:8px 13px;border:1px solid rgba(184,255,101,.2);border-radius:999px;background:rgba(184,255,101,.07);font:500 14px 'DM Mono',monospace;color:var(--signal);margin:0}.hero-title{font:600 clamp(24px,3.2vw,44px)/1.15 'Syne',sans-serif;letter-spacing:-.035em;max-width:780px;margin-bottom:22px;color:var(--text)}.hero-title span{color:#9b7cff}.profile-status{display:flex;align-items:center;gap:10px;margin-top:18px;padding:10px 14px;border:1px solid rgba(184,255,101,.24);border-radius:999px;background:rgba(9,8,17,.72);color:var(--signal);font:500 10px 'DM Mono';letter-spacing:.06em;white-space:nowrap;backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(0,0,0,.3)}.profile-status::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);animation:pulse 2.4s infinite}.hero-right{flex-direction:column;align-items:center}.hero-role{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:20px}.hero-role .role-label{font:500 11px 'DM Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}.hero-role .role-divider{width:28px;height:1px;background:rgba(255,123,103,.5)}.hero-role .role-fields{font-size:13px;color:var(--text-dim)}
-  .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service-card{position:relative;min-height:260px;padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));overflow:hidden;transition:transform .35s,border-color .35s}.service-card::after{content:'';position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;bottom:-65px;background:var(--service-color);filter:blur(55px);opacity:.18}.service-card:hover{transform:translateY(-8px);border-color:color-mix(in srgb,var(--service-color) 55%,transparent)}.service-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:17px;background:color-mix(in srgb,var(--service-color) 14%,transparent);color:var(--service-color);font:600 22px 'DM Mono';margin-bottom:46px}.service-card h3{font-size:20px;margin-bottom:10px}.service-card p{color:var(--text-dim);font-size:14px;line-height:1.65}.service-card:nth-child(1){--service-color:#5577ff}.service-card:nth-child(2){--service-color:#9b6cff}.service-card:nth-child(3){--service-color:#2ee7df}.service-card:nth-child(4){--service-color:#ff7b67}
+  .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service-card{position:relative;min-height:260px;padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));overflow:hidden;transition:transform .35s,border-color .35s}.service-card::after{content:'';position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;bottom:-65px;background:var(--service-color);filter:blur(55px);opacity:.18}.service-card:hover{transform:translateY(-8px);border-color:color-mix(in srgb,var(--service-color) 55%,transparent)}.service-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:17px;background:color-mix(in srgb,var(--service-color) 14%,transparent);color:var(--service-color);font-size:21px;margin-bottom:46px}.service-card h3{font-size:20px;margin-bottom:10px}.service-card p{color:var(--text-dim);font-size:14px;line-height:1.65}.service-card:nth-child(1){--service-color:#5577ff}.service-card:nth-child(2){--service-color:#9b6cff}.service-card:nth-child(3){--service-color:#2ee7df}.service-card:nth-child(4){--service-color:#ff7b67}.readout-icon{font-size:14px;color:var(--amber);margin-bottom:10px}.primary-btn i,.secondary-btn i,.contact-btn i{font-size:13px}.contact-btn{display:inline-flex;align-items:center;gap:10px}.back-top i{font-size:14px}
   .gallery .card:nth-child(1),.gallery .card:nth-child(2){grid-column:span 2;min-height:300px;padding:36px}.gallery .card:nth-child(1) h4,.gallery .card:nth-child(2) h4{font-size:clamp(24px,3vw,34px);max-width:560px}.gallery .card:nth-child(1)::before,.gallery .card:nth-child(2)::before{content:'FEATURED';display:block;align-self:flex-end;font:10px 'DM Mono';letter-spacing:.14em;color:var(--text-faint);margin-bottom:auto}.gallery .card:nth-child(1){background:radial-gradient(circle at 90% 10%,rgba(46,231,223,.18),transparent 45%),var(--panel)}.gallery .card:nth-child(2){background:radial-gradient(circle at 90% 10%,rgba(155,108,255,.2),transparent 45%),var(--panel)}
   @media(max-width:950px){.services-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:620px){.services-grid{grid-template-columns:1fr}.service-card{min-height:220px}.gallery .card:nth-child(1),.gallery .card:nth-child(2){grid-column:auto;min-height:260px;padding:28px}}
@@ -369,8 +370,8 @@
         <div class="hero-role"><span class="role-label">Research &amp; Solution Engineer</span><span class="role-divider"></span><span class="role-fields">Industrial IoT · Edge AI · Embedded Systems</span></div>
         <p class="lede">Six years turning ideas into working hardware and software across Industrial IoT, Edge AI, and renewable energy monitoring, with four patent applications and national recognition along the way.</p>
         <div class="hero-actions">
-          <a class="primary-btn" href="#gallery">Explore my work <span>↘</span></a>
-          <a class="secondary-btn" href="#contact">Start a conversation <span>↗</span></a>
+          <a class="primary-btn" href="#gallery"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Explore my work <span>↘</span></a>
+          <a class="secondary-btn" href="#contact"><i class="fa-regular fa-paper-plane" aria-hidden="true"></i> Start a conversation <span>↗</span></a>
         </div>
       </div>
       <div class="hero-right">
@@ -389,10 +390,10 @@
     </div>
     <canvas id="trace-canvas"></canvas>
     <div class="readouts">
-      <div class="readout"><div class="val">6+</div><div class="lbl">Years Experience</div></div>
-      <div class="readout"><div class="val">26</div><div class="lbl">Projects Shipped</div></div>
-      <div class="readout"><div class="val">4</div><div class="lbl">Patent Applications</div></div>
-      <div class="readout"><div class="val">9</div><div class="lbl">National Awards</div></div>
+      <div class="readout"><div class="readout-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div><div class="val">6+</div><div class="lbl">Years Experience</div></div>
+      <div class="readout"><div class="readout-icon"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i></div><div class="val">26</div><div class="lbl">Projects Shipped</div></div>
+      <div class="readout"><div class="readout-icon"><i class="fa-regular fa-lightbulb" aria-hidden="true"></i></div><div class="val">4</div><div class="lbl">Patent Applications</div></div>
+      <div class="readout"><div class="readout-icon"><i class="fa-solid fa-trophy" aria-hidden="true"></i></div><div class="val">9</div><div class="lbl">National Awards</div></div>
     </div>
   </div>
 </header>
@@ -425,10 +426,10 @@
     <div class="sec-head"><span class="sec-idx">02</span><h2>What I Do Best</h2></div>
     <p class="sec-sub" style="margin-top:-32px;margin-bottom:40px;">From field signals to useful decisions — I design the complete path from embedded hardware to production-ready digital products.</p>
     <div class="services-grid reveal">
-      <article class="service-card"><div class="service-icon">01</div><h3>Industrial IoT</h3><p>Reliable monitoring, telemetry, alarms, gateways, and SCADA systems built for real operating environments.</p></article>
-      <article class="service-card"><div class="service-icon">02</div><h3>Edge AI</h3><p>Low-power intelligence, sound recognition, signal processing, and adaptive sensing at the edge.</p></article>
-      <article class="service-card"><div class="service-icon">03</div><h3>Embedded Systems</h3><p>Firmware, PCB design, sensor integration, communication protocols, and production-focused prototyping.</p></article>
-      <article class="service-card"><div class="service-icon">04</div><h3>Product Development</h3><p>End-to-end solution architecture that transforms research and ambitious concepts into working products.</p></article>
+      <article class="service-card"><div class="service-icon"><i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i></div><h3>Industrial IoT</h3><p>Reliable monitoring, telemetry, alarms, gateways, and SCADA systems built for real operating environments.</p></article>
+      <article class="service-card"><div class="service-icon"><i class="fa-solid fa-brain" aria-hidden="true"></i></div><h3>Edge AI</h3><p>Low-power intelligence, sound recognition, signal processing, and adaptive sensing at the edge.</p></article>
+      <article class="service-card"><div class="service-icon"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div><h3>Embedded Systems</h3><p>Firmware, PCB design, sensor integration, communication protocols, and production-focused prototyping.</p></article>
+      <article class="service-card"><div class="service-icon"><i class="fa-solid fa-cubes-stacked" aria-hidden="true"></i></div><h3>Product Development</h3><p>End-to-end solution architecture that transforms research and ambitious concepts into working products.</p></article>
     </div>
   </div>
 </section>
@@ -663,9 +664,9 @@
     <div class="contact-cta reveal">
       <div class="sec-head" style="margin-bottom:20px;"><span class="sec-idx">08</span><h2>Let's build something that monitors, senses, and responds.</h2></div>
       <div class="contact-row">
-        <a class="contact-btn" href="mailto:thisara.n.herath@gmail.com">EMAIL → thisara.n.herath@gmail.com</a>
-        <a class="contact-btn" href="tel:+94711186006">CALL → +94 71 118 6006</a>
-        <a class="contact-btn" href="https://www.linkedin.com/in/thisara-n-herath-42844a344" target="_blank" rel="noopener">LINKEDIN →</a>
+        <a class="contact-btn" href="mailto:thisara.n.herath@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i> EMAIL → thisara.n.herath@gmail.com</a>
+        <a class="contact-btn" href="tel:+94711186006"><i class="fa-solid fa-phone" aria-hidden="true"></i> CALL → +94 71 118 6006</a>
+        <a class="contact-btn" href="https://www.linkedin.com/in/thisara-n-herath-42844a344" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> LINKEDIN →</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -674,7 +675,7 @@
     </div>
   </div>
 </footer>
-<a class="back-top" href="#" aria-label="Back to top">↑</a>
+<a class="back-top" href="#" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
 <div class="lightbox" id="photo-lightbox" role="dialog" aria-modal="true" aria-label="Project photo viewer">
   <div class="lightbox-inner">
     <button class="lightbox-close" type="button" aria-label="Close photo viewer">×</button>
