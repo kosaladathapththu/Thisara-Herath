@@ -334,6 +334,8 @@
   .gallery .card:nth-child(1),.gallery .card:nth-child(2){grid-column:span 2;min-height:300px;padding:36px}.gallery .card:nth-child(1) h4,.gallery .card:nth-child(2) h4{font-size:clamp(24px,3vw,34px);max-width:560px}.gallery .card:nth-child(1)::before,.gallery .card:nth-child(2)::before{content:'FEATURED';display:block;align-self:flex-end;font:10px 'DM Mono';letter-spacing:.14em;color:var(--text-faint);margin-bottom:auto}.gallery .card:nth-child(1){background:radial-gradient(circle at 90% 10%,rgba(46,231,223,.18),transparent 45%),var(--panel)}.gallery .card:nth-child(2){background:radial-gradient(circle at 90% 10%,rgba(155,108,255,.2),transparent 45%),var(--panel)}
   @media(max-width:950px){.services-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:620px){.services-grid{grid-template-columns:1fr}.service-card{min-height:220px}.gallery .card:nth-child(1),.gallery .card:nth-child(2){grid-column:auto;min-height:260px;padding:28px}}
+  .photo-gallery{columns:3 280px;column-gap:16px}.photo-card{position:relative;break-inside:avoid;margin:0 0 16px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--panel);cursor:zoom-in}.photo-card:nth-child(5n+1) .photo-frame{aspect-ratio:4/5}.photo-card:nth-child(5n+2) .photo-frame{aspect-ratio:4/3}.photo-card:nth-child(5n+3) .photo-frame{aspect-ratio:1}.photo-frame{position:relative;aspect-ratio:3/2;overflow:hidden}.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease,filter .4s}.photo-card:hover img{transform:scale(1.055);filter:saturate(1.08)}.photo-overlay{position:absolute;inset:auto 0 0;padding:70px 20px 18px;background:linear-gradient(transparent,rgba(5,4,12,.92));color:#fff}.photo-overlay h3{font-size:15px;line-height:1.35}.photo-index{display:block;font:10px 'DM Mono';color:var(--signal);margin-bottom:7px}.photo-card.is-hidden{display:none}.gallery-more{display:flex;justify-content:center;margin-top:34px}.gallery-more button{border:0;border-radius:999px;padding:15px 24px;background:var(--signal);color:#101507;font:600 14px 'Outfit';cursor:pointer;transition:transform .25s}.gallery-more button:hover{transform:translateY(-3px)}
+  .lightbox{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:24px;background:rgba(5,4,12,.92);backdrop-filter:blur(16px)}.lightbox.open{display:grid}.lightbox-inner{position:relative;max-width:min(1100px,94vw);max-height:92vh}.lightbox img{display:block;max-width:100%;max-height:80vh;border-radius:20px;box-shadow:0 30px 100px rgba(0,0,0,.7)}.lightbox-title{color:#fff;font:500 15px 'Outfit';text-align:center;margin-top:14px}.lightbox-close,.lightbox-nav{position:absolute;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(10,9,18,.75);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(8px)}.lightbox-close{width:44px;height:44px;right:-12px;top:-12px;font-size:24px}.lightbox-nav{width:50px;height:50px;top:45%;font-size:24px}.lightbox-prev{left:-70px}.lightbox-next{right:-70px}@media(max-width:700px){.photo-gallery{columns:2 145px;column-gap:10px}.photo-card{margin-bottom:10px;border-radius:16px}.photo-overlay{padding:48px 14px 13px}.photo-overlay h3{font-size:12px}.lightbox-prev{left:8px}.lightbox-next{right:8px}}
 </style>
 </head>
 <body>
@@ -349,6 +351,7 @@
       <a href="#awards" data-idx="03">AWARDS</a>
       <a href="#patents" data-idx="04">PATENTS</a>
       <a href="#gallery" data-idx="05">PROJECTS</a>
+      <a href="#project-photos" data-idx="06">PHOTOS</a>
       <a href="#skills" data-idx="06">SKILLS</a>
       <a href="#contact" data-idx="07" class="nav-cta">LET'S TALK</a>
     </nav>
@@ -576,6 +579,15 @@
   </div>
 </section>
 
+<section id="project-photos">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">06</span><h2>Projects in Action</h2></div>
+    <p class="sec-sub" style="margin-top:-32px;margin-bottom:40px;">A field journal of prototypes, deployments, demonstrations, industry collaborations, and national recognition.</p>
+    <div class="photo-gallery" id="photo-gallery"></div>
+    <div class="gallery-more"><button id="gallery-more" type="button">View all 50 photos ↓</button></div>
+  </div>
+</section>
+
 <section id="skills">
   <div class="wrap">
     <div class="sec-head"><span class="sec-idx">06</span><h2>Skills</h2></div>
@@ -663,6 +675,15 @@
   </div>
 </footer>
 <a class="back-top" href="#" aria-label="Back to top">↑</a>
+<div class="lightbox" id="photo-lightbox" role="dialog" aria-modal="true" aria-label="Project photo viewer">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" type="button" aria-label="Close photo viewer">×</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous photo">‹</button>
+    <img src="" alt="">
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next photo">›</button>
+    <p class="lightbox-title"></p>
+  </div>
+</div>
 
 <script>
   // signal trace animation
