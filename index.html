@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thisara N. Herath — Solution Engineer, Industrial IoT & Edge AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0e1316;
@@ -291,9 +291,46 @@
 
   .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.in{opacity:1; transform:none;}
+
+  /* 2026 visual system */
+  :root{--bg:#090811;--panel:#12101d;--panel-2:#19162a;--line:rgba(255,255,255,.11);--text:#f7f4ff;--text-dim:#b8b1c9;--text-faint:#777087;--signal:#b8ff65;--signal-dim:#668f3c;--amber:#ff7b67;--amber-dim:#9b493f;--radius:22px}
+  body{font-family:'Outfit',sans-serif;background:radial-gradient(circle at 82% 3%,rgba(124,92,255,.22),transparent 30rem),radial-gradient(circle at 5% 35%,rgba(184,255,101,.08),transparent 30rem),var(--bg)}
+  body::before{background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,#000,transparent 75%)}
+  h1,h2,h3,h4{font-family:'Syne',sans-serif}.mono,.role-line,.hero-tag,.sec-idx,.tl-date,.filter-btn,.skill-block .cat,.chip,.contact-btn,.foot-bottom{font-family:'DM Mono',monospace}
+  .wrap{max-width:1240px;padding-inline:clamp(20px,5vw,64px)}
+  .scroll-progress{position:fixed;inset:0 auto auto 0;height:3px;width:0;background:linear-gradient(90deg,var(--signal),#9b7cff,var(--amber));z-index:100;box-shadow:0 0 18px var(--signal)}
+  .topbar{background:rgba(9,8,17,.72);border-color:rgba(255,255,255,.08);backdrop-filter:blur(20px)}
+  .topbar .wrap{height:76px}.brand{font-family:'Syne',sans-serif;font-size:14px;letter-spacing:.08em}.brand .dot{background:var(--signal);box-shadow:0 0 14px var(--signal)}
+  nav a{font-family:'DM Mono',monospace;border-radius:999px;padding:8px 11px}nav a::before{display:none}nav a:hover,nav a.active{color:var(--signal);background:rgba(184,255,101,.08)}
+  .nav-cta{border:1px solid rgba(184,255,101,.32)!important;color:var(--signal)!important}
+  .menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--text);font-size:20px;cursor:pointer}
+  .hero{min-height:calc(100vh - 76px);display:grid;align-items:center;padding:clamp(72px,10vw,130px) 0 56px;border:0}.hero-top{grid-template-columns:minmax(0,1fr) 340px;align-items:center;margin-bottom:56px}
+  .hero::before{content:'';position:absolute;width:440px;height:440px;right:-120px;top:8%;border-radius:50%;background:#7c5cff;filter:blur(140px);opacity:.17;pointer-events:none}
+  .hero-tag{border:0;background:rgba(184,255,101,.1);border-radius:999px;padding:9px 14px;color:var(--signal)}
+  .hero h1.bigname{font-family:'Syne',sans-serif;font-size:clamp(64px,10.5vw,142px);letter-spacing:-.075em;line-height:.78;margin:24px 0 36px;text-transform:none;overflow:visible;background:none;color:var(--text)}
+  .hero h1.bigname .accent{background:linear-gradient(100deg,var(--signal),#7c5cff 75%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none}
+  .role-line{font-size:12px;line-height:1.8;color:var(--amber);max-width:680px}.hero p.lede{font-size:clamp(17px,2vw,21px);line-height:1.65;max-width:670px}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}.primary-btn,.secondary-btn{display:inline-flex;align-items:center;gap:12px;padding:14px 20px;border-radius:999px;text-decoration:none;font-weight:600;transition:transform .25s,background .25s}.primary-btn{background:var(--signal);color:#101507}.secondary-btn{border:1px solid var(--line);background:rgba(255,255,255,.04)}.primary-btn:hover,.secondary-btn:hover{transform:translateY(-3px)}.secondary-btn:hover{background:rgba(255,255,255,.09)}
+  .scope{width:300px;height:360px}.scope-ring,.scope-tick,.scope-label{display:none}.scope-photo{inset:0;border:0;border-radius:160px 160px 28px 28px;box-shadow:0 35px 80px rgba(0,0,0,.4);transform:rotate(3deg);transition:transform .5s}.scope-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(9,8,17,.45),transparent 50%)}.scope:hover .scope-photo{transform:rotate(0) translateY(-6px)}
+  #trace-canvas{opacity:.45;height:70px;border-color:var(--line)}.readouts{border:0;gap:12px}.readout{border:1px solid var(--line)!important;border-radius:18px;padding:20px;background:rgba(255,255,255,.035);backdrop-filter:blur(10px)}.readout .val{font-family:'Syne';font-size:34px;color:var(--text)}.readout .lbl{font-family:'DM Mono';color:var(--text-faint)}
+  section{padding:clamp(78px,10vw,132px) 0;border-color:var(--line);scroll-margin-top:70px}.sec-head{align-items:center;margin-bottom:48px}.sec-head h2{font-size:clamp(34px,5vw,64px);letter-spacing:-.045em}.sec-idx{border:0;border-radius:999px;background:rgba(124,92,255,.16);color:#a994ff;padding:7px 11px}.sec-idx::before,.sec-idx::after{display:none}.sec-sub{font-size:16px;line-height:1.7}
+  .about-grid{gap:clamp(36px,8vw,100px)}.about-grid p{font-size:18px;line-height:1.75}.focus-list{padding:24px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(124,92,255,.09),rgba(255,255,255,.025))}.focus-list li{padding:13px 4px}.focus-list li::before{content:'↗'}
+  .tl{border:0;margin:0;display:grid;gap:14px}.tl-item{padding:28px 30px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.025);transition:transform .3s,border-color .3s}.tl-item:hover{transform:translateX(8px);border-color:rgba(184,255,101,.35)}.tl-item::before{display:none}.tl-date{color:var(--signal)}.tl-item h3{font-size:23px}
+  .award-grid,.gallery{background:transparent;border:0;gap:14px}.award-card,.card{border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.028);padding:28px;min-height:230px}.award-card:hover,.card:hover{background:linear-gradient(145deg,rgba(124,92,255,.12),rgba(184,255,101,.055));border-color:rgba(184,255,101,.35);transform:translateY(-6px)}.award-card .tier,.card .tag{color:var(--signal)}.award-card h4,.card h4{font-size:18px}.card p{font-size:14px;line-height:1.65}
+  .patent-list{background:transparent;border:0;gap:12px}.patent-row{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025);padding:24px 26px}.patent-row:hover{background:rgba(124,92,255,.09)}
+  .filters{position:sticky;top:75px;z-index:12;padding:14px 0;background:rgba(9,8,17,.88);backdrop-filter:blur(18px)}.filter-btn{border-radius:999px;padding:10px 15px}.filter-btn.active{color:#101507}.gallery-count{margin-left:auto;align-self:center;color:var(--text-faint);font:11px 'DM Mono'}
+  .skill-block{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.022)}.skill-block .cat{font-size:12px;color:var(--signal)}.chip{border-radius:999px;background:rgba(255,255,255,.035)}
+  .lp-grid>div{padding:30px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.02)}
+  footer{position:relative;padding:110px 0 42px;background:linear-gradient(150deg,rgba(124,92,255,.16),rgba(184,255,101,.06))}.contact-cta h2{font-size:clamp(38px,6vw,76px);max-width:900px;line-height:1.05}.contact-btn{border-radius:999px;background:transparent}.contact-btn:hover{color:#101507}
+  .back-top{position:fixed;right:22px;bottom:22px;width:48px;height:48px;border:1px solid var(--line);border-radius:50%;background:rgba(18,16,29,.85);color:var(--text);display:grid;place-items:center;text-decoration:none;opacity:0;transform:translateY(10px);transition:.3s;z-index:30;backdrop-filter:blur(10px)}.back-top.visible{opacity:1;transform:none}
+  @media(max-width:900px){.hero-top{grid-template-columns:1fr}.hero-right{position:absolute;right:5vw;top:120px;opacity:.3}.scope{width:230px;height:280px}.hero-left{position:relative;z-index:2}.gallery{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:820px){.menu-toggle{display:grid;place-items:center}nav{display:none;position:absolute;top:76px;left:20px;right:20px;padding:14px;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:18px;background:rgba(18,16,29,.98);box-shadow:0 24px 60px rgba(0,0,0,.45)}nav.open{display:flex}nav a{padding:12px}.about-grid,.lp-grid{grid-template-columns:1fr}}
+  @media(max-width:620px){.hero{min-height:auto}.hero h1.bigname{font-size:clamp(55px,20vw,88px)}.hero-right{display:none}.readouts{grid-template-columns:repeat(2,1fr)}.readout{padding:16px}.readout .val{font-size:28px}.gallery,.award-grid,.skills-grid{grid-template-columns:1fr}.filters{top:74px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.filter-btn{white-space:nowrap}.gallery-count{display:none}.patent-row{grid-template-columns:1fr}.foot-bottom{font-size:9px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#trace-canvas{display:none}}
 </style>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 
 <div class="topbar">
   <div class="wrap">
@@ -305,8 +342,9 @@
       <a href="#patents" data-idx="04">PATENTS</a>
       <a href="#gallery" data-idx="05">PROJECTS</a>
       <a href="#skills" data-idx="06">SKILLS</a>
-      <a href="#contact" data-idx="07">CONTACT</a>
+      <a href="#contact" data-idx="07" class="nav-cta">LET'S TALK</a>
     </nav>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
   </div>
 </div>
 
@@ -318,6 +356,10 @@
         <h1 class="bigname">THISARA<br><span class="accent">HERATH</span></h1>
         <p class="role-line">Research &amp; Solution Engineer — Industrial IoT · Edge AI · Embedded Systems</p>
         <p class="lede">Six years turning ideas into working hardware and software across Industrial IoT, Edge AI, and renewable energy monitoring, with four patent applications and national recognition along the way.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#gallery">Explore my work <span>↘</span></a>
+          <a class="secondary-btn" href="#contact">Start a conversation <span>↗</span></a>
+        </div>
       </div>
       <div class="hero-right">
         <div class="scope">
@@ -451,6 +493,7 @@
       <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
       <button class="filter-btn" data-filter="agri">Agri & Field Systems</button>
       <button class="filter-btn" data-filter="aero">Aerospace & Robotics</button>
+      <span class="gallery-count" aria-live="polite">Showing 26 projects</span>
     </div>
     <div class="gallery" id="gallery-grid">
 
@@ -596,6 +639,7 @@
     </div>
   </div>
 </footer>
+<a class="back-top" href="#" aria-label="Back to top">↑</a>
 
 <script>
   // signal trace animation
@@ -644,6 +688,7 @@
   // filter logic
   const buttons = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.card');
+  const galleryCount = document.querySelector('.gallery-count');
   buttons.forEach(btn=>{
     btn.addEventListener('click', ()=>{
       buttons.forEach(b=>b.classList.remove('active'));
@@ -654,6 +699,8 @@
         if(match){ c.classList.remove('hide'); requestAnimationFrame(()=>c.classList.add('show')); }
         else { c.classList.remove('show'); c.classList.add('hide'); }
       });
+      const visible = [...cards].filter(c => f === 'all' || c.dataset.cat === f).length;
+      galleryCount.textContent = `Showing ${visible} project${visible === 1 ? '' : 's'}`;
     });
   });
 
@@ -663,6 +710,34 @@
   }, {threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   document.querySelectorAll('.card').forEach(el=>io.observe(el)); // ensure cards animate too via 'show' class already set
+
+  // Mobile navigation, reading progress, and active section state.
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+  menuToggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', open);
+    menuToggle.textContent = open ? '×' : '☰';
+  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    nav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.textContent = '☰';
+  }));
+
+  const progress = document.querySelector('.scroll-progress');
+  const backTop = document.querySelector('.back-top');
+  const sections = [...document.querySelectorAll('section[id], footer[id]')];
+  const navLinks = [...nav.querySelectorAll('a[href^="#"]')];
+  function updatePageState(){
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+    backTop.classList.toggle('visible', scrollY > 700);
+    const current = [...sections].reverse().find(section => scrollY + 180 >= section.offsetTop);
+    navLinks.forEach(link => link.classList.toggle('active', current && link.hash === `#${current.id}`));
+  }
+  updatePageState();
+  addEventListener('scroll', updatePageState, {passive:true});
 </script>
 
 </body>
