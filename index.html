@@ -329,7 +329,7 @@
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#trace-canvas{display:none}}
 
   /* Reference-inspired portfolio structure */
-  .hero h1.bigname{font-size:clamp(56px,8.4vw,118px);line-height:.9}.hero-intro{font:500 16px 'DM Mono',monospace;color:var(--signal);margin-bottom:18px}.hero-title{font:600 clamp(24px,3.2vw,44px)/1.15 'Syne',sans-serif;letter-spacing:-.035em;max-width:780px;margin-bottom:20px;color:var(--text)}.hero-title span{color:#9b7cff}
+  .hero h1.bigname{font-size:clamp(56px,8.4vw,118px);line-height:.9;margin-top:12px}.hero-intro{display:flex;align-items:center;gap:12px;font:500 15px 'DM Mono',monospace;color:var(--signal);margin-bottom:0}.hero-intro::before{content:'';width:34px;height:1px;background:var(--signal)}.hero-title{font:600 clamp(24px,3.2vw,44px)/1.15 'Syne',sans-serif;letter-spacing:-.035em;max-width:780px;margin-bottom:20px;color:var(--text)}.hero-title span{color:#9b7cff}.profile-status{display:flex;align-items:center;gap:10px;margin-top:18px;padding:10px 14px;border:1px solid rgba(184,255,101,.24);border-radius:999px;background:rgba(9,8,17,.72);color:var(--signal);font:500 10px 'DM Mono';letter-spacing:.06em;white-space:nowrap;backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(0,0,0,.3)}.profile-status::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);animation:pulse 2.4s infinite}.hero-right{flex-direction:column;align-items:center}.hero-role{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:20px}.hero-role .role-label{font:500 11px 'DM Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}.hero-role .role-divider{width:28px;height:1px;background:rgba(255,123,103,.5)}.hero-role .role-fields{font-size:13px;color:var(--text-dim)}.orbit-chip{position:absolute;z-index:3;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(18,16,29,.82);color:var(--text);font:500 9px 'DM Mono';letter-spacing:.09em;backdrop-filter:blur(12px);box-shadow:0 12px 28px rgba(0,0,0,.25)}.orbit-chip.one{left:-34px;top:70px;color:#2ee7df}.orbit-chip.two{right:-34px;bottom:54px;color:#a994ff}
   .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service-card{position:relative;min-height:260px;padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));overflow:hidden;transition:transform .35s,border-color .35s}.service-card::after{content:'';position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;bottom:-65px;background:var(--service-color);filter:blur(55px);opacity:.18}.service-card:hover{transform:translateY(-8px);border-color:color-mix(in srgb,var(--service-color) 55%,transparent)}.service-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:17px;background:color-mix(in srgb,var(--service-color) 14%,transparent);color:var(--service-color);font:600 22px 'DM Mono';margin-bottom:46px}.service-card h3{font-size:20px;margin-bottom:10px}.service-card p{color:var(--text-dim);font-size:14px;line-height:1.65}.service-card:nth-child(1){--service-color:#5577ff}.service-card:nth-child(2){--service-color:#9b6cff}.service-card:nth-child(3){--service-color:#2ee7df}.service-card:nth-child(4){--service-color:#ff7b67}
   .gallery .card:nth-child(1),.gallery .card:nth-child(2){grid-column:span 2;min-height:300px;padding:36px}.gallery .card:nth-child(1) h4,.gallery .card:nth-child(2) h4{font-size:clamp(24px,3vw,34px);max-width:560px}.gallery .card:nth-child(1)::before,.gallery .card:nth-child(2)::before{content:'FEATURED';display:block;align-self:flex-end;font:10px 'DM Mono';letter-spacing:.14em;color:var(--text-faint);margin-bottom:auto}.gallery .card:nth-child(1){background:radial-gradient(circle at 90% 10%,rgba(46,231,223,.18),transparent 45%),var(--panel)}.gallery .card:nth-child(2){background:radial-gradient(circle at 90% 10%,rgba(155,108,255,.2),transparent 45%),var(--panel)}
   @media(max-width:950px){.services-grid{grid-template-columns:repeat(2,1fr)}}
@@ -364,10 +364,9 @@
     <div class="hero-top">
       <div class="hero-left">
         <p class="hero-intro">Hi, I'm</p>
-        <div class="hero-tag">SIGNAL ACQUIRED · SOLUTION ENGINEER</div>
         <h1 class="bigname">Thisara <span class="accent">Herath</span></h1>
         <h2 class="hero-title">Turning bold ideas into <span>intelligent systems.</span></h2>
-        <p class="role-line">Research &amp; Solution Engineer — Industrial IoT · Edge AI · Embedded Systems</p>
+        <div class="hero-role"><span class="role-label">Research &amp; Solution Engineer</span><span class="role-divider"></span><span class="role-fields">Industrial IoT · Edge AI · Embedded Systems</span></div>
         <p class="lede">Six years turning ideas into working hardware and software across Industrial IoT, Edge AI, and renewable energy monitoring, with four patent applications and national recognition along the way.</p>
         <div class="hero-actions">
           <a class="primary-btn" href="#gallery">Explore my work <span>↘</span></a>
@@ -376,6 +375,8 @@
       </div>
       <div class="hero-right">
         <div class="scope">
+          <span class="orbit-chip one">INDUSTRIAL IoT</span>
+          <span class="orbit-chip two">EDGE AI</span>
           <div class="scope-ring"></div>
           <div class="scope-tick tick-n"></div>
           <div class="scope-tick tick-s"></div>
@@ -385,6 +386,7 @@
           <div class="scope-label top">TARGET · LOCKED</div>
           <div class="scope-label bottom">7.2957°N · 80.6294°E</div>
         </div>
+        <div class="profile-status">AVAILABLE FOR INNOVATION &amp; COLLABORATION</div>
       </div>
     </div>
     <canvas id="trace-canvas"></canvas>
