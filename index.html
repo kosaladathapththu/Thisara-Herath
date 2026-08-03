@@ -301,7 +301,7 @@
   .scroll-progress{position:fixed;inset:0 auto auto 0;height:3px;width:0;background:linear-gradient(90deg,var(--signal),#9b7cff,var(--amber));z-index:100;box-shadow:0 0 18px var(--signal)}
   .topbar{background:rgba(9,8,17,.72);border-color:rgba(255,255,255,.08);backdrop-filter:blur(20px)}
   .topbar .wrap{height:76px}.brand{font-family:'Syne',sans-serif;font-size:14px;letter-spacing:.08em}.brand .dot{background:var(--signal);box-shadow:0 0 14px var(--signal)}
-  nav a{font-family:'DM Mono',monospace;border-radius:999px;padding:8px 11px}nav a::before{display:none}nav a:hover,nav a.active{color:var(--signal);background:rgba(184,255,101,.08)}
+  nav{gap:4px}nav a{font-family:'DM Mono',monospace;border-radius:999px;padding:8px 10px}nav a::before{display:none}nav a:hover,nav a.active{color:var(--signal);background:rgba(184,255,101,.08)}
   .nav-cta{border:1px solid rgba(184,255,101,.32)!important;color:var(--signal)!important}
   .menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--text);font-size:20px;cursor:pointer}
   .hero{min-height:calc(100vh - 76px);display:grid;align-items:center;padding:clamp(72px,10vw,130px) 0 56px;border:0}.hero-top{grid-template-columns:minmax(0,1fr) 340px;align-items:center;margin-bottom:56px}
@@ -754,6 +754,53 @@
   }, {threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   document.querySelectorAll('.card').forEach(el=>io.observe(el)); // ensure cards animate too via 'show' class already set
+
+  // Project photo journal, generated from the original Google Drive filenames.
+  const projectPhotos = [{"file":"001.jpg","title":"DSI Machine Monitoring"},{"file":"002.jpg","title":"LoRa Development Board"},{"file":"003.jpg","title":"Innovation Talk"},{"file":"004.jpg","title":"Environmental Monitoring Solution — POC"},{"file":"005.jpg","title":"CubeSat"},{"file":"006.jpg","title":"National Project Management Excellence Awards 2024"},{"file":"007.jpg","title":"AgroPulse — Meeting with Farmers"},{"file":"008.jpg","title":"CubeSat Development"},{"file":"009.jpg","title":"DHL Temperature Monitoring Solution"},{"file":"010.jpg","title":"IoT Monitoring Solution"},{"file":"011.jpg","title":"Project Demonstration"},{"file":"012.jpg","title":"Product Presentation"},{"file":"013.jpg","title":"IoT Gateway"},{"file":"014.jpg","title":"MQTT Decoder"},{"file":"015.jpg","title":"AgroPulse Project Demo"},{"file":"016.jpg","title":"Innova Minds"},{"file":"017.jpg","title":"DHL Temperature Monitoring Solution"},{"file":"018.jpg","title":"Project Demonstration"},{"file":"019.jpg","title":"Pole Climber Testing"},{"file":"020.jpg","title":"SLASSCOM National Ingenuity Awards 2025"},{"file":"021.jpg","title":"Pole Climber Testing"},{"file":"022.jpg","title":"DHL Temperature Monitoring Solution"},{"file":"023.jpg","title":"Environmental Condition Monitoring Device"},{"file":"024.jpg","title":"DSI Monitoring Device"},{"file":"025.jpg","title":"SLASSCOM National Ingenuity Awards 2025"},{"file":"026.jpg","title":"AgroPulse Project Demo"},{"file":"027.jpg","title":"SLT & WUSL Memorandum of Understanding"},{"file":"028.jpg","title":"National ICT Awards — NBQSA 2025"},{"file":"029.jpg","title":"AgroPulse Project Demo"},{"file":"030.jpg","title":"National ICT Awards — NBQSA 2025"},{"file":"031.jpg","title":"DHL Temperature Monitoring Solution"},{"file":"032.jpg","title":"Project Sakira"},{"file":"033.jpg","title":"One Click Project"},{"file":"034.jpg","title":"Academic Book Publication"},{"file":"035.jpg","title":"Elephant Trip Switch IoT"},{"file":"036.jpg","title":"Elephant Repellent Pole"},{"file":"037.jpg","title":"Smarter Q Implementation"},{"file":"038.jpg","title":"Smarter Q"},{"file":"039.jpg","title":"SLASSCOM National Ingenuity Awards 2025"},{"file":"040.jpg","title":"National ICT Awards — NBQSA 2025"},{"file":"041.jpg","title":"DSI Project Handover Meeting"},{"file":"042.jpg","title":"AgroPulse Project Demo"},{"file":"043.jpg","title":"NB-IoT Development Board"},{"file":"044.jpg","title":"SLASSCOM National Ingenuity Awards 2025"},{"file":"045.jpg","title":"SLASSCOM National Ingenuity Awards 2025"},{"file":"046.jpg","title":"National ICT Awards — NBQSA 2024"},{"file":"047.jpg","title":"AgroPulse Minister Presentation"},{"file":"048.jpg","title":"DHL Temperature Monitoring Solution"},{"file":"049.jpg","title":"AgroPulse Minister Presentation"},{"file":"050.jpg","title":"MQTT Decoder"}];
+  const photoGallery = document.getElementById('photo-gallery');
+  const moreButton = document.getElementById('gallery-more');
+  projectPhotos.forEach((photo, index) => {
+    const figure = document.createElement('figure');
+    figure.className = `photo-card${index >= 12 ? ' is-hidden' : ''}`;
+    figure.dataset.index = index;
+    figure.innerHTML = `<div class="photo-frame"><img src="assets/project-gallery/${photo.file}" alt="${photo.title}" loading="lazy" decoding="async"><figcaption class="photo-overlay"><span class="photo-index">PHOTO ${String(index + 1).padStart(2,'0')}</span><h3>${photo.title}</h3></figcaption></div>`;
+    photoGallery.appendChild(figure);
+  });
+  moreButton.addEventListener('click', () => {
+    photoGallery.querySelectorAll('.is-hidden').forEach(card => card.classList.remove('is-hidden'));
+    moreButton.parentElement.hidden = true;
+  });
+
+  const lightbox = document.getElementById('photo-lightbox');
+  const lightboxImage = lightbox.querySelector('img');
+  const lightboxTitle = lightbox.querySelector('.lightbox-title');
+  let activePhoto = 0;
+  function showPhoto(index){
+    activePhoto = (index + projectPhotos.length) % projectPhotos.length;
+    const photo = projectPhotos[activePhoto];
+    lightboxImage.src = `assets/project-gallery/${photo.file}`;
+    lightboxImage.alt = photo.title;
+    lightboxTitle.textContent = `${activePhoto + 1} / ${projectPhotos.length} — ${photo.title}`;
+  }
+  function closeLightbox(){ lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+  photoGallery.addEventListener('click', event => {
+    const card = event.target.closest('.photo-card');
+    if(!card) return;
+    showPhoto(Number(card.dataset.index));
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lightbox.querySelector('.lightbox-close').focus();
+  });
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.querySelector('.lightbox-prev').addEventListener('click', () => showPhoto(activePhoto - 1));
+  lightbox.querySelector('.lightbox-next').addEventListener('click', () => showPhoto(activePhoto + 1));
+  lightbox.addEventListener('click', event => { if(event.target === lightbox) closeLightbox(); });
+  addEventListener('keydown', event => {
+    if(!lightbox.classList.contains('open')) return;
+    if(event.key === 'Escape') closeLightbox();
+    if(event.key === 'ArrowLeft') showPhoto(activePhoto - 1);
+    if(event.key === 'ArrowRight') showPhoto(activePhoto + 1);
+  });
 
   // Mobile navigation, reading progress, and active section state.
   const menuToggle = document.querySelector('.menu-toggle');
