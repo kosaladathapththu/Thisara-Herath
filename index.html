@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thisara N. Herath — Solution Engineer, Industrial IoT & Edge AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1316;
+    --panel:#161d22;
+    --panel-2:#1c242a;
+    --line:#2a343b;
+    --text:#e9eef1;
+    --text-dim:#8fa0aa;
+    --text-faint:#5c6b74;
+    --signal:#4fe0c4;
+    --signal-dim:#2a7f70;
+    --amber:#f2a93b;
+    --amber-dim:#8a6626;
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--signal); color:#04120f;}
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  h1,h2,h3,h4{font-family:'Chakra Petch', sans-serif; font-weight:600; letter-spacing:-0.01em;}
+
+  /* scanline / grid texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(79,224,196,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,224,196,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px; position:relative; z-index:1;}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(14,19,22,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:15px;}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--signal); box-shadow:0 0 8px var(--signal); animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+  nav{display:flex; gap:28px; font-size:13px;}
+  nav a{
+    color:var(--text-dim); text-decoration:none; letter-spacing:0.03em;
+    font-family:'IBM Plex Mono',monospace; font-size:12px;
+    position:relative; padding-bottom:2px; transition:color .2s;
+  }
+  nav a:hover{color:var(--signal);}
+  nav a::before{content:attr(data-idx); color:var(--text-faint); margin-right:6px;}
+  @media(max-width:820px){ nav{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 64px;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--signal);
+    border:1px solid var(--signal-dim); background:rgba(79,224,196,0.06);
+    padding:6px 12px; border-radius:2px; margin-bottom:26px; letter-spacing:0.04em;
+  }
+  .hero-tag::before{content:"●"; font-size:8px;}
+
+  .hero-top{
+    display:grid; grid-template-columns:1fr 320px; gap:48px; align-items:start;
+    margin-bottom:44px;
+  }
+  .hero h1.bigname{
+    font-family:'Chakra Petch', sans-serif; font-weight:700;
+    font-size:clamp(58px, 9.5vw, 128px);
+    line-height:0.94;
+    letter-spacing:-0.01em;
+    text-transform:uppercase;
+    margin-bottom:20px;
+    background:linear-gradient(180deg, var(--text) 0%, var(--text) 60%, rgba(233,238,241,0.75) 100%);
+    -webkit-background-clip:text; background-clip:text;
+  }
+  .hero h1.bigname .accent{
+    color:var(--signal);
+    -webkit-text-fill-color:var(--signal);
+    text-shadow:0 0 34px rgba(79,224,196,0.35);
+  }
+  .role-line{
+    font-family:'IBM Plex Mono', monospace; font-size:13.5px; color:var(--amber);
+    letter-spacing:0.03em; margin-bottom:18px; text-transform:uppercase;
+  }
+  .hero p.lede{
+    font-size:17px; color:var(--text-dim); max-width:560px;
+  }
+
+  .hero-right{display:flex; justify-content:center; padding-top:8px;}
+  .scope{
+    position:relative; width:260px; height:260px; flex-shrink:0;
+  }
+  .scope-ring{
+    position:absolute; inset:0; border:1px dashed var(--signal-dim); border-radius:50%;
+    animation:spin 40s linear infinite;
+  }
+  @keyframes spin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+  .scope-tick{position:absolute; background:var(--signal-dim);}
+  .tick-n{top:-14px; left:50%; width:1px; height:14px; transform:translateX(-50%);}
+  .tick-s{bottom:-14px; left:50%; width:1px; height:14px; transform:translateX(-50%);}
+  .tick-e{right:-14px; top:50%; width:14px; height:1px; transform:translateY(-50%);}
+  .tick-w{left:-14px; top:50%; width:14px; height:1px; transform:translateY(-50%);}
+  .scope-photo{
+    position:absolute; inset:16px; border-radius:50%; overflow:hidden;
+    border:1px solid var(--signal); box-shadow:0 0 0 6px rgba(79,224,196,0.06), 0 0 40px rgba(79,224,196,0.15);
+  }
+  .scope-photo img{width:100%; height:100%; object-fit:cover; filter:saturate(0.85) contrast(1.05);}
+  .scope-label{
+    position:absolute; left:50%; transform:translateX(-50%);
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.08em;
+    color:var(--signal); white-space:nowrap; text-transform:uppercase;
+  }
+  .scope-label.top{top:-34px;}
+  .scope-label.bottom{bottom:-30px; color:var(--text-faint);}
+
+  @media(max-width:900px){
+    .hero-top{grid-template-columns:1fr; gap:32px;}
+    .hero-right{justify-content:flex-start;}
+    .scope{width:180px; height:180px;}
+  }
+  #trace-canvas{
+    width:100%; height:120px; display:block;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    margin-bottom:36px;
+  }
+  .readouts{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    border:1px solid var(--line);
+  }
+  .readout{
+    padding:18px 20px; border-right:1px solid var(--line);
+  }
+  .readout:last-child{border-right:none;}
+  .readout .val{font-family:'Chakra Petch',sans-serif; font-size:26px; font-weight:600; color:var(--signal);}
+  .readout .lbl{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.06em; margin-top:4px;}
+  @media(max-width:700px){
+    .readouts{grid-template-columns:repeat(2,1fr);}
+    .readout{border-bottom:1px solid var(--line);}
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:88px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:44px;}
+  .sec-idx{
+    font-family:'IBM Plex Mono',monospace; color:var(--signal); font-size:12px;
+    border:1px solid var(--signal-dim); padding:4px 9px; letter-spacing:0.05em;
+  }
+  .sec-idx::before{content:"["; color:var(--text-faint);}
+  .sec-idx::after{content:"]"; color:var(--text-faint);}
+  .sec-head h2{font-size:clamp(24px,3vw,34px);}
+  .sec-sub{color:var(--text-dim); font-size:14.5px; max-width:600px; margin-top:10px;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid; grid-template-columns:1.4fr 1fr; gap:64px;}
+  .about-grid p{color:var(--text-dim); font-size:16px; margin-bottom:18px;}
+  .about-grid p strong{color:var(--text); font-weight:500;}
+  .focus-list{list-style:none;}
+  .focus-list li{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--text-dim);
+    padding:10px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between;
+  }
+  .focus-list li::before{content:"→"; color:var(--signal); margin-right:10px;}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;}}
+
+  /* ---------- timeline ---------- */
+  .tl{border-left:1px solid var(--line); margin-left:6px;}
+  .tl-item{position:relative; padding:0 0 44px 32px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:""; position:absolute; left:-5px; top:4px; width:9px; height:9px;
+    border-radius:50%; background:var(--bg); border:2px solid var(--signal);
+  }
+  .tl-date{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--amber); letter-spacing:0.04em; margin-bottom:6px;}
+  .tl-item h3{font-size:19px; margin-bottom:4px;}
+  .tl-item .org{color:var(--text-dim); font-size:13.5px; margin-bottom:10px;}
+  .tl-item p{color:var(--text-dim); font-size:14.5px; max-width:640px;}
+
+  /* ---------- awards ---------- */
+  .award-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .award-card{background:var(--panel); padding:26px 24px; border-top:2px solid transparent; transition:border-color .2s, background .2s;}
+  .award-card:hover{border-top-color:var(--amber); background:var(--panel-2);}
+  .award-card .tier{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px;}
+  .award-card h4{font-size:15.5px; margin-bottom:6px; line-height:1.3;}
+  .award-card .proj{font-size:12.5px; color:var(--text-dim);}
+  .award-card .yr{position:absolute; opacity:0;}
+  @media(max-width:900px){.award-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){.award-grid{grid-template-columns:1fr;}}
+
+  /* ---------- patents ---------- */
+  .patent-list{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line);}
+  .patent-row{background:var(--panel); display:grid; grid-template-columns:120px 1fr; gap:24px; padding:20px 24px; align-items:start; transition:background .2s;}
+  .patent-row:hover{background:var(--panel-2);}
+  .patent-id{font-family:'IBM Plex Mono',monospace; color:var(--signal); font-size:13px;}
+  .patent-id span{display:block; color:var(--text-faint); font-size:10px; margin-top:4px; text-transform:uppercase; letter-spacing:0.05em;}
+  .patent-row h4{font-size:15.5px; margin-bottom:5px;}
+  .patent-row p{font-size:13.5px; color:var(--text-dim);}
+  @media(max-width:640px){.patent-row{grid-template-columns:1fr;}}
+
+  /* ---------- gallery / filters ---------- */
+  .filters{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:36px;}
+  .filter-btn{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.03em;
+    background:transparent; border:1px solid var(--line); color:var(--text-dim);
+    padding:9px 16px; cursor:pointer; transition:all .2s; text-transform:uppercase;
+  }
+  .filter-btn:hover{border-color:var(--signal-dim); color:var(--text);}
+  .filter-btn.active{background:var(--signal); border-color:var(--signal); color:#04120f; font-weight:700;}
+
+  .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .card{
+    background:var(--panel); padding:26px 24px; min-height:200px;
+    display:flex; flex-direction:column; transition:background .2s, transform .2s;
+    opacity:0; transform:translateY(10px);
+  }
+  .card.show{opacity:1; transform:none;}
+  .card.hide{display:none;}
+  .card{border-left:2px solid transparent; transition:background .2s, border-color .2s, transform .2s;}
+  .card:hover{background:var(--panel-2); border-left-color:var(--signal); box-shadow:inset 0 0 40px rgba(79,224,196,0.04);}
+  .card .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--signal);
+    text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;
+  }
+  .card h4{font-size:16px; margin-bottom:10px; line-height:1.3;}
+  .card p{font-size:13px; color:var(--text-dim); flex:1;}
+  .card .id{margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-faint);}
+  @media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){.gallery{grid-template-columns:1fr;}}
+
+  /* ---------- skills ---------- */
+  .skills-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:32px 48px;}
+  .skill-block .cat{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber);
+    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px;
+    border-bottom:1px solid var(--line); padding-bottom:10px;
+  }
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim);
+    border:1px solid var(--line); padding:6px 10px;
+  }
+  @media(max-width:700px){.skills-grid{grid-template-columns:1fr;}}
+
+  /* ---------- leadership / pubs ---------- */
+  .lp-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px;}
+  .lp-grid ul{list-style:none;}
+  .lp-grid li{padding:12px 0; border-bottom:1px solid var(--line); font-size:14px; color:var(--text-dim);}
+  .lp-grid li strong{color:var(--text); font-weight:500;}
+  .lp-grid h3{font-size:16px; margin-bottom:16px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.04em; color:var(--signal);}
+  @media(max-width:820px){.lp-grid{grid-template-columns:1fr;}}
+
+  /* ---------- footer / contact ---------- */
+  footer{padding:80px 0 48px; border-bottom:none;}
+  .contact-cta h2{font-size:clamp(30px,4vw,46px); max-width:640px; margin-bottom:24px;}
+  .contact-row{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:56px;}
+  .contact-btn{
+    font-family:'IBM Plex Mono',monospace; font-size:13px;
+    border:1px solid var(--signal-dim); color:var(--signal); text-decoration:none;
+    padding:14px 22px; transition:all .2s; background:rgba(79,224,196,0.05);
+  }
+  .contact-btn:hover{background:var(--signal); color:#04120f;}
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    padding-top:32px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint);
+  }
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> T.N. HERATH</div>
+    <nav>
+      <a href="#about" data-idx="01">ABOUT</a>
+      <a href="#experience" data-idx="02">EXPERIENCE</a>
+      <a href="#awards" data-idx="03">AWARDS</a>
+      <a href="#patents" data-idx="04">PATENTS</a>
+      <a href="#gallery" data-idx="05">PROJECTS</a>
+      <a href="#skills" data-idx="06">SKILLS</a>
+      <a href="#contact" data-idx="07">CONTACT</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="hero-left">
+        <div class="hero-tag">SIGNAL ACQUIRED · SOLUTION ENGINEER</div>
+        <h1 class="bigname">THISARA<br><span class="accent">HERATH</span></h1>
+        <p class="role-line">Research &amp; Solution Engineer — Industrial IoT · Edge AI · Embedded Systems</p>
+        <p class="lede">Six years turning ideas into working hardware and software across Industrial IoT, Edge AI, and renewable energy monitoring, with four patent applications and national recognition along the way.</p>
+      </div>
+      <div class="hero-right">
+        <div class="scope">
+          <div class="scope-ring"></div>
+          <div class="scope-tick tick-n"></div>
+          <div class="scope-tick tick-s"></div>
+          <div class="scope-tick tick-e"></div>
+          <div class="scope-tick tick-w"></div>
+          <div class="scope-photo"><img src="data:image/jpeg;base64,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" alt="Portrait of Thisara N. Herath"></div>
+          <div class="scope-label top">TARGET · LOCKED</div>
+          <div class="scope-label bottom">7.2957°N · 80.6294°E</div>
+        </div>
+      </div>
+    </div>
+    <canvas id="trace-canvas"></canvas>
+    <div class="readouts">
+      <div class="readout"><div class="val">6+</div><div class="lbl">Years Experience</div></div>
+      <div class="readout"><div class="val">26</div><div class="lbl">Projects Shipped</div></div>
+      <div class="readout"><div class="val">4</div><div class="lbl">Patent Applications</div></div>
+      <div class="readout"><div class="val">9</div><div class="lbl">National Awards</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">01</span><h2>About</h2></div>
+    <div class="about-grid reveal">
+      <div>
+        <p><strong>Research-oriented Solution Engineer</strong> with over six years of combined experience across independent product development, corporate R&D, embedded systems, Edge AI, and Industrial IoT.</p>
+        <p>Experienced in transforming ideas into practical products — monitoring, control, SCADA, and edge computing solutions for enterprise and renewable energy applications. Strong background in applied research, solution architecture, prototyping, industrial communication, firmware development, and research-to-product transformation.</p>
+        <p>Currently a <strong>Solution Engineer</strong> in Enterprise Solutions at SLT-Mobitel, following four years leading systems research in Sri Lanka Telecom's Digital Lab and founding an independent innovation studio before that.</p>
+      </div>
+      <ul class="focus-list">
+        <li>Industrial IoT (IIoT) <span>01</span></li>
+        <li>Embedded Intelligent Systems <span>02</span></li>
+        <li>Low Power Embedded Computing <span>03</span></li>
+        <li>Digital Signal Processing <span>04</span></li>
+        <li>Intelligent Sensing Systems <span>05</span></li>
+        <li>Edge Computing <span>06</span></li>
+        <li>Real-Time Monitoring & Control <span>07</span></li>
+        <li>Industrial Automation <span>08</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">02</span><h2>Experience</h2></div>
+    <div class="tl reveal">
+      <div class="tl-item">
+        <div class="tl-date">19 NOV 2024 — PRESENT</div>
+        <h3>Solution Engineer</h3>
+        <div class="org">Enterprise Solutions · SLT-Mobitel, Colombo 08</div>
+        <p>Designing enterprise solutions and driving research-to-product transformation across the company's Industrial IoT and monitoring portfolio.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">26 SEP 2022 — 19 NOV 2024</div>
+        <h3>Research Executive — Systems</h3>
+        <div class="org">Digital Lab, Research and Development Division · Sri Lanka Telecom PLC, Colombo 01</div>
+        <p>Led applied research and solution architecture for industrial monitoring, SCADA, and renewable energy projects including the award-winning Sensegrid platform.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">16 MAY 2022 — 26 SEP 2022</div>
+        <h3>Embedded Systems Engineer — Internship</h3>
+        <div class="org">Digital Lab, Research and Development Division · Sri Lanka Telecom PLC, Colombo 01</div>
+        <p>Firmware development, sensor integration, and embedded debugging on early-stage IoT gateway and monitoring hardware.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2019 — MAY 2022</div>
+        <h3>Founder & Product Development Lead</h3>
+        <div class="org">ORAGAN Innovation Lab</div>
+        <p>Independent research and product development venture transforming ideas into functional prototypes and technology products, concluded before joining Sri Lanka Telecom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="awards">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">03</span><h2>Awards & Recognition</h2>
+    </div>
+    <div class="award-grid reveal">
+      <div class="award-card"><div class="tier">Gold · National Level · 2025</div><h4>SLASSCOM National Ingenuity Awards</h4><div class="proj">AgroPulse — Best Innovative Product in Agritech</div></div>
+      <div class="award-card"><div class="tier">Gold · Western Province · 2025</div><h4>SLASSCOM National Ingenuity Awards</h4><div class="proj">AgroPulse — Best Innovative Product in Agritech</div></div>
+      <div class="award-card"><div class="tier">Special Recognition · 2025</div><h4>National ICT Awards — NBQSA</h4><div class="proj">Best Commercial Solution Addressing National Disasters</div></div>
+      <div class="award-card"><div class="tier">Bronze · 2025</div><h4>National ICT Awards — NBQSA</h4><div class="proj">Agriculture in Industrial category</div></div>
+      <div class="award-card"><div class="tier">Silver · 2024</div><h4>National Project Management Excellence Awards</h4><div class="proj">Sensegrid Industrial Machine Monitoring — Best Managed Project, Manufacturing</div></div>
+      <div class="award-card"><div class="tier">Gold · 2024</div><h4>SLASSCOM National Ingenuity Awards</h4><div class="proj">Sensegrid Industrial Machine Monitoring — Best Innovative Project, Manufacturing</div></div>
+      <div class="award-card"><div class="tier">2nd Runner-Up · 2021</div><h4>CubeHack Cube Satellite Competition</h4><div class="proj">CubeSat circuit & structural design with SEDS Sri Lanka</div></div>
+      <div class="award-card"><div class="tier">First Place · 2017</div><h4>Innovation Competition</h4><div class="proj">Nikaweratiya Education Zone</div></div>
+      <div class="award-card"><div class="tier">Qualified Contestant · 2016</div><h4>INNOVA MINDS</h4><div class="proj">Sri Lanka's first TV innovation competition</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="patents">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">04</span><h2>Patent Applications</h2></div>
+    <div class="patent-list reveal">
+      <div class="patent-row">
+        <div class="patent-id">PA · 23478<span>Filed</span></div>
+        <div><h4>AgroPulse — Cultivating Insights for Agricultural Advancement</h4><p>An agricultural transformation engine designed to enhance Sri Lanka's agriculture through data-driven insights and intelligent systems.</p></div>
+      </div>
+      <div class="patent-row">
+        <div class="patent-id">PA · 22946<span>Filed</span></div>
+        <div><h4>Elephant Repellent Pole Using Acoustic Signal Patterns</h4><p>A system utilizing specific sound frequencies, patterns, and signals to influence and deter elephant behavior.</p></div>
+      </div>
+      <div class="patent-row">
+        <div class="patent-id">PA · 20554<span>Filed</span></div>
+        <div><h4>Food Powder Mix for Altering Taste and Smell of Foods</h4><p>Collaborative patent application focused on a novel food powder formulation to modify taste and aroma characteristics.</p></div>
+      </div>
+      <div class="patent-row">
+        <div class="patent-id">PA · 18599<span>Filed</span></div>
+        <div><h4>Gutter Cleaning Device</h4><p>Designed and developed an automated gutter cleaning mechanism.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">05</span><h2>Project Gallery</h2></div>
+    <p class="sec-sub" style="margin-top:-28px; margin-bottom:36px;">26 independent and cooperative research projects spanning Edge AI, Industrial IoT, embedded hardware, mobile applications, agri-tech, and aerospace.</p>
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All (26)</button>
+      <button class="filter-btn" data-filter="edge-ai">Edge AI & Sensing</button>
+      <button class="filter-btn" data-filter="iiot">Industrial IoT & SCADA</button>
+      <button class="filter-btn" data-filter="hardware">Embedded Hardware</button>
+      <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+      <button class="filter-btn" data-filter="agri">Agri & Field Systems</button>
+      <button class="filter-btn" data-filter="aero">Aerospace & Robotics</button>
+    </div>
+    <div class="gallery" id="gallery-grid">
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT · Flagship</div><h4>Sensegrid Industrial Machine Monitoring</h4><p>Award-winning platform monitoring industrial machine performance and operational status. Served as Solution Developer, Product Owner, and Project Manager.</p><div class="id">SLT · 2024</div></div>
+
+      <div class="card show" data-cat="agri"><div class="tag">AgriTech · Founder</div><h4>AgroPulse</h4><p>National-scale agricultural intelligence platform supporting crop monitoring, data-driven planning, and resource management across Sri Lanka's agriculture sector.</p><div class="id">PA-23478</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT</div><h4>Renewable Power Plants — Online Monitoring & SCADA</h4><p>Edge software gateways, real-time data acquisition, protocol integration, remote control, and offline SCADA for solar, hydro, and wind plants.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT</div><h4>DHL Temperature Monitoring Solution</h4><p>IoT-based temperature monitoring system for warehouse environmental monitoring and real-time alerts.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT</div><h4>DSI Machine Performance Monitoring</h4><p>Industrial IoT solution monitoring machine performance, operational status, and production-related data.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="edge-ai"><div class="tag">Edge AI</div><h4>Adaptive Edge AI Framework</h4><p>Adaptive sound processing gate that filters normal audio before Edge AI analysis, reducing unnecessary processing and power consumption.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="edge-ai"><div class="tag">Edge AI</div><h4>Edge AI Sound Recognition Platform</h4><p>Research platform for testing real-time sound recognition on low-power, resource-constrained embedded devices.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="edge-ai"><div class="tag">Edge AI · Field</div><h4>Elephant Repellent Acoustic System</h4><p>Controlled acoustic signals and sound patterns to influence elephant movement — an alternative to conventional electric fencing.</p><div class="id">PA-22946</div></div>
+
+      <div class="card show" data-cat="mobile"><div class="tag">Mobile App</div><h4>Deaf Communicator</h4><p>Published Android application supporting communication for people with hearing and speech impairments.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="mobile"><div class="tag">Mobile App · Co-Founder</div><h4>Skill Developer</h4><p>Co-developed and published educational Android application for skills development and learning.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="mobile"><div class="tag">Mobile Integration</div><h4>Smart Taxi-Meter IoT Unit</h4><p>Embedded device and mobile application integration for a connected taxi meter system.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware</div><h4>SLT-Mobitel LoRa Development Board</h4><p>Embedded development board designed for long-range, low-power IoT applications.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware</div><h4>IoT Gateway</h4><p>PCB hardware and firmware connecting field devices to cloud-based IoT platforms.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT</div><h4>Manhole Monitoring Device</h4><p>Prototype, firmware, and PCB design for monitoring telecommunications infrastructure conditions.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT</div><h4>Smarter Q Gate Control System</h4><p>System architecture, embedded device, PCB, and mobile app integration for an IoT-based gate controller.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT</div><h4>Environmental Monitoring System</h4><p>Embedded hardware and firmware for collecting and transmitting environmental data.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">Industrial IoT · Healthtech</div><h4>Elderly Care Intelligent Monitoring System</h4><p>Embedded IoT solution integrating fall detection, intelligent sensing, remote monitoring, and real-time alerting for assisted care.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware</div><h4>Pole Climbing Assistance Device</h4><p>Prototype device supporting telecommunications field operations, designed and demonstrated in the field.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware</div><h4>Smart Fan Controller</h4><p>Electronic schematic and PCB design for an intelligent fan control solution.</p><div class="id">SLT R&D</div></div>
+
+      <div class="card show" data-cat="iiot"><div class="tag">IoT</div><h4>Enterprise Smart Scale IoT Solution</h4><p>IoT-enabled smart weighing system for enterprise monitoring and data management.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="aero"><div class="tag">Robotics</div><h4>Rover Robot</h4><p>Mobile rover robot designed and developed, exhibited at the Shilpa Sena Exhibition.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware</div><h4>Low Cost Digital Wrench</h4><p>PCB design and Android application development contribution for a low-cost digital torque wrench solution.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware · EV</div><h4>Night Fury Electric Motorcycle</h4><p>Electric motorcycle concept integrating electrical, electronic, and mechanical systems.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="aero"><div class="tag">Aerospace</div><h4>Serendib 2.0 High Altitude Balloon</h4><p>CubeSat circuit and structural design, participated with SEDS Sri Lanka.</p><div class="id">SEDS Sri Lanka</div></div>
+
+      <div class="card show" data-cat="agri"><div class="tag">Field Systems</div><h4>Elephant Deterrent Solution</h4><p>Low-cost concept using recycled plastic bottles to help reduce elephant movement into rural communities.</p><div class="id">Independent</div></div>
+
+      <div class="card show" data-cat="hardware"><div class="tag">Hardware</div><h4>Gutter-Cleaning Device</h4><p>Automated mechanism designed for removing debris from building gutters.</p><div class="id">PA-18599</div></div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">06</span><h2>Skills</h2></div>
+    <div class="skills-grid reveal">
+      <div class="skill-block">
+        <div class="cat">Research & Technical</div>
+        <div class="chips">
+          <span class="chip">Edge AI</span><span class="chip">Embedded AI</span><span class="chip">Digital Signal Processing</span><span class="chip">Intelligent Sensing</span><span class="chip">Low Power Computing</span><span class="chip">Applied Engineering Research</span><span class="chip">Prototype Validation</span><span class="chip">Research-to-Product Dev.</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="cat">Industrial IoT</div>
+        <div class="chips">
+          <span class="chip">Edge IoT</span><span class="chip">Edge Computing</span><span class="chip">Real-Time Monitoring</span><span class="chip">Remote Control Systems</span><span class="chip">Offline SCADA</span><span class="chip">Telemetry Processing</span><span class="chip">Edge-to-Cloud Integration</span><span class="chip">Alarm Management</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="cat">Industrial Communication</div>
+        <div class="chips">
+          <span class="chip">Modbus RTU</span><span class="chip">Modbus TCP</span><span class="chip">MQTT</span><span class="chip">OPC UA</span><span class="chip">RS485</span><span class="chip">UART</span><span class="chip">SPI</span><span class="chip">I²C</span><span class="chip">I²S</span><span class="chip">REST API</span><span class="chip">Industrial Gateways</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="cat">Embedded Systems</div>
+        <div class="chips">
+          <span class="chip">ESP32 / ESP32-S3</span><span class="chip">STM32</span><span class="chip">PIC MCUs</span><span class="chip">Arduino</span><span class="chip">Raspberry Pi</span><span class="chip">Orange Pi</span><span class="chip">Firmware Dev.</span><span class="chip">Sensor Integration</span><span class="chip">Low-Power Design</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="cat">Electronics & Product Dev.</div>
+        <div class="chips">
+          <span class="chip">System Architecture</span><span class="chip">Schematic Design</span><span class="chip">PCB Design</span><span class="chip">Component Selection</span><span class="chip">Hardware Testing</span><span class="chip">BOM Preparation</span><span class="chip">Design for Manufacturing</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="cat">Programming & Tools</div>
+        <div class="chips">
+          <span class="chip">C / C++ / Embedded C</span><span class="chip">Python</span><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">Android Dev.</span><span class="chip">Altium Designer</span><span class="chip">EasyEDA</span><span class="chip">MATLAB</span><span class="chip">Git</span><span class="chip">AWS IoT</span><span class="chip">Figma / Adobe XD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leadership">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-idx">07</span><h2>Leadership & Publications</h2></div>
+    <div class="lp-grid reveal">
+      <div>
+        <h3>Leadership & Professional Activities</h3>
+        <ul>
+          <li><strong>President</strong>, SEDS — Wayamba University Chapter, 2022</li>
+          <li><strong>Vice President</strong>, SEDS Wayamba University Chapter, 2021</li>
+          <li><strong>UN G17 University Ambassador</strong> for Affordable and Clean Energy</li>
+          <li><strong>Founder</strong>, ORAGAN Innovation Studio</li>
+          <li><strong>Co-Founder & Technical Lead</strong>, Skill Developer educational app</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Academic Book Publications</h3>
+        <ul>
+          <li><strong>A/L Information & Communication Technology</strong> (2018) — ISBN 978-955-35754-1-8</li>
+          <li><strong>Grade 10 Information & Communication Technology</strong> (2019) — ISBN 978-955-35754-2-5</li>
+          <li><strong>A/L Engineering Technology Short Notebook</strong>, 2nd Edition (2020) — ISBN 978-955-35754-1-8</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-cta reveal">
+      <div class="sec-head" style="margin-bottom:20px;"><span class="sec-idx">08</span><h2>Let's build something that monitors, senses, and responds.</h2></div>
+      <div class="contact-row">
+        <a class="contact-btn" href="mailto:thisara.n.herath@gmail.com">EMAIL → thisara.n.herath@gmail.com</a>
+        <a class="contact-btn" href="tel:+94711186006">CALL → +94 71 118 6006</a>
+        <a class="contact-btn" href="https://www.linkedin.com/in/thisara-n-herath-42844a344" target="_blank" rel="noopener">LINKEDIN →</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 H.M. THISARA N. HERATH — WAYAMBA UNIVERSITY OF SRI LANKA, B.ENG.TECH (HONS)</span>
+      <span>REFEREES AVAILABLE ON REQUEST</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // signal trace animation
+  const canvas = document.getElementById('trace-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize(){
+    canvas.width = canvas.clientWidth * devicePixelRatio;
+    canvas.height = canvas.clientHeight * devicePixelRatio;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let t = 0;
+  const lines = [
+    {amp:0.28, freq:0.018, speed:0.045, phase:0, color:'rgba(79,224,196,0.9)', width:1.6},
+    {amp:0.14, freq:0.03, speed:0.03, phase:2, color:'rgba(79,224,196,0.35)', width:1},
+    {amp:0.08, freq:0.06, speed:0.07, phase:5, color:'rgba(242,169,59,0.5)', width:1},
+  ];
+
+  function draw(){
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+    // gridline mid
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, h/2); ctx.lineTo(w, h/2);
+    ctx.stroke();
+
+    lines.forEach(l=>{
+      ctx.beginPath();
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = l.width * devicePixelRatio;
+      for(let x=0; x<=w; x+=4){
+        const y = h/2 + Math.sin(x*l.freq + t*l.speed + l.phase) * (h*l.amp) * (0.6+0.4*Math.sin(t*0.01+l.phase));
+        if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    });
+
+    t += 1;
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // filter logic
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c=>{
+        const match = f==='all' || c.dataset.cat===f;
+        if(match){ c.classList.remove('hide'); requestAnimationFrame(()=>c.classList.add('show')); }
+        else { c.classList.remove('show'); c.classList.add('hide'); }
+      });
+    });
+  });
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.card').forEach(el=>io.observe(el)); // ensure cards animate too via 'show' class already set
+</script>
+
+</body>
+</html>
